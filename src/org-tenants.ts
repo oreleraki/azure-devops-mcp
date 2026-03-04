@@ -35,13 +35,13 @@ async function trySavingCache(cache: OrgTenantCache): Promise<void> {
 }
 
 async function fetchTenantFromApi(orgName: string): Promise<string> {
-  const url = `https://vssps.dev.azure.com/${orgName}`;
+  const url = `https://dev.azure.com/${orgName}`;
 
   try {
     const response = await fetch(url, { method: "HEAD" });
 
-    if (response.status !== 404) {
-      throw new Error(`Expected status 404, got ${response.status}`);
+    if (response.status !== 401) {
+      throw new Error(`Expected status 401, got ${response.status}`);
     }
 
     const tenantId = response.headers.get("x-vss-resourcetenant");
